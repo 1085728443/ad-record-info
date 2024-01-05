@@ -18,16 +18,16 @@ declare var JSONPath: any;
     template: `
     <div class="record--info--wrap" [style.width]="formWidth + 'px'">
     <mat-grid-list [gutterSize]="'0px'" #container cols="18" rowHeight="10px">
-        
+
         <mat-grid-tile  class="grid--border--box" *ngFor="let tile of tiles;let i = index" [colspan]="tile.options.cols" [rowspan]="tile.options.rows"
         [style.borderLeft]="tile.getStyle('border-left')"
         [style.borderRight]="tile.getStyle('border-right')"
         [style.borderTop]="tile.getStyle('border-top')"
-        [style.borderBottom]="tile.getStyle('border-bottom')"  
+        [style.borderBottom]="tile.getStyle('border-bottom')"
         [style.background]="tile.getStyle('backgroundColor')">
             <div [ngSwitch]="tile.options.contentType" class="tile--options--content--type--box"
                 [style.textAlign]="tile.getStyle('text-align')"
-                [style.fontWeight]="tile.getStyle('fontWeight')" 
+                [style.fontWeight]="tile.getStyle('fontWeight')"
                 [style.color]="tile.getStyle('fontColor')" [style.fontSize]="tile.getStyle('fontSize') + 'px'"
                 [style.background]="tile.getStyle('backgroundColor')">
                 <div *ngSwitchCase="'label'" class="label--wrap">
@@ -36,41 +36,41 @@ declare var JSONPath: any;
                             <span class="text-danger" *ngIf="tile.options.required == 'true'">. </span>
                                 <span [title]="label.value" *ngIf="label.type == 'text'">{{label.value}}</span>
                                 <span [title]="entity[label.value]" *ngIf="label.type == 'attr'">{{entity[label.value]}}</span>
-                        </span>  
+                        </span>
                     </ng-container>
                     <ng-container    *ngIf="language == 'en-US'">
                     <span *ngFor="let label of tile.options.labelNameEn" class="label--box">
                         <span class="text-danger" *ngIf="tile.options.required == 'true'">. </span>
                             <span [title]="label.value" *ngIf="label.type == 'text'">{{label.value}}</span>
                             <span [title]="entity[label.value]" *ngIf="label.type == 'attr'">{{entity[label.value]}}</span>
-                    </span>  
+                    </span>
                 </ng-container>
                 </div>
                 <div *ngSwitchCase="'input'" class="form--build--box--input--box">
-                    <input 
-                    nz-input 
+                    <input
+                    nz-input
                     [title]="entity[tile.options.attrName]"
                     [style.textAlign]="tile.getStyle('text-align')" type="text"
-                        formValidPass 
+                        formValidPass
                         [scene]="scene"
                         [placeholder]="tile.options.placeholder"
                         [validPass]="validPass" [formValue]="entity[tile.options.attrName]" [formValidOption]="tile.options"
-                        [ngClass]="{'showBorder' : tile.getStyle('inputBorder') == 'show'}" 
-                        [disabled]="disableEdit" class="form-control form--build--box--input" 
+                        [ngClass]="{'showBorder' : tile.getStyle('inputBorder') == 'show'}"
+                        [disabled]="disableEdit" class="form-control form--build--box--input"
                         [(ngModel)]="entity[tile.options.attrName]">
                 </div>
                 <div *ngSwitchCase="'input-number'" class="form--build--box--input--box">
-                    <input 
-                    nz-input 
+                    <input
+                    nz-input
                     [title]="entity[tile.options.attrName]"
                     [style.textAlign]="tile.getStyle('text-align')" type="number"
-                        formValidPass 
+                        formValidPass
                         [scene]="scene"
                         [placeholder]="tile.options.placeholder"
                         (change)="validNumberInput($event,tile.options.attrName)"
                         [validPass]="validPass" [formValue]="entity[tile.options.attrName]" [formValidOption]="tile.options"
-                        [ngClass]="{'showBorder' : tile.getStyle('inputBorder') == 'show'}" 
-                        [disabled]="disableEdit" class="form-control form--build--box--input" 
+                        [ngClass]="{'showBorder' : tile.getStyle('inputBorder') == 'show'}"
+                        [disabled]="disableEdit" class="form-control form--build--box--input"
                         [(ngModel)]="entity[tile.options.attrName]">
                 </div>
                 <div *ngSwitchCase="'radio-button'" class="radio--build--box">
@@ -88,12 +88,12 @@ declare var JSONPath: any;
                     </section>
                 </div>
                 <div *ngSwitchCase="'select'" class="form--build--box--input--box" >
-                    <nz-select [ngClass]="{'showBorder' : tile.getStyle('inputBorder') == 'show'}"   
+                    <nz-select [ngClass]="{'showBorder' : tile.getStyle('inputBorder') == 'show'}"
                         [nzPlaceHolder]="tile.options.placeholder"
                      formValidPass [scene]="scene" [validPass]="validPass" [formValue]="entity[tile.options.attrName]"
-                      [formValidOption]="tile.options"  [disabled]="disableEdit" class="form--build--box--input" 
-                      [(ngModel)]="entity[tile.options.attrName]">                    
-                    <nz-option 
+                      [formValidOption]="tile.options"  [disabled]="disableEdit" class="form--build--box--input"
+                      [(ngModel)]="entity[tile.options.attrName]">
+                    <nz-option
                     *ngFor="let selectAttr of tile.options.selectAttrs"
                      [nzValue]="selectAttr.value"
                      [nzLabel]="selectAttr.displayName"
@@ -104,38 +104,45 @@ declare var JSONPath: any;
                     <textarea [ngClass]="{'showBorder' : tile.getStyle('inputBorder') == 'show'}" formValidPass [scene]="scene" [validPass]="validPass" [formValue]="entity[tile.options.attrName]" [formValidOption]="tile.options" [disabled]="disableEdit" class="form-control form--build--box--input textarea--input" [(ngModel)]="entity[tile.options.attrName]"></textarea>
                 </div>
 
-                <div *ngSwitchCase="'date'" class="form--build--box--input--box">                    
+                <div *ngSwitchCase="'date'" class="form--build--box--input--box">
                     <nz-date-picker
                     [nzShowTime]="tile.enableSelectTime()"
                     formValidPass [validPass]="validPass" [scene]="scene" [formValue]="entity[tile.options.attrName]" [formValidOption]="tile.options"
-                     [ngClass]="{'showBorder' : tile.getStyle('inputBorder')  == 'show'}"  [(ngModel)]="entity[tile.options.attrName]" 
-                    class="form-control form--build--box--input" 
+                     [ngClass]="{'showBorder' : tile.getStyle('inputBorder')  == 'show'}"  [(ngModel)]="entity[tile.options.attrName]"
+                    class="form-control form--build--box--input"
                     [nzDisabled]="disableEdit"
                     [nzFormat]="tile.getDateFormat()"></nz-date-picker>
                 </div>
                 <div *ngSwitchCase="'process-list'" class="form--build--box--input--box process--info--wrap">
-                    <ul class="process--info--box clearfix">
-                        <li                         
-                            *ngFor="let process of progressNodes;let i = index"
-                            (click)="showProcessDetail(process)"
-                            [ngClass]="{only:progressNodes.length==1}"
-                            class="process--node--box {{process.class}}"
-                        >
-                            <div (click)="$event.stopPropagation()"
-                                *ngIf="
-                                showProcessIcon(i)
-                                ">
-                                <div class="process--list--row--wrap--icon"></div>
-                            </div>
-                            <div>
-                                <div class="head">{{process.name}}</div>
-                                <div class="description">
-                                    <div><span class="MODULES_DATABASE_OPERATOR">操作人</span> : {{process.operator}}  </div>
-                                    <div>{{process.operate_date}}</div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>                  
+                <div class="div-body" >
+                    <div class="div-title">
+                      <span
+                        style="
+                        text-align: left;
+                        color: rgba(122, 107, 107, 0.65);
+                        font-size: 14px;
+                        ">
+                        审批信息
+                      </span>
+                    </div>
+                    <div class="process-list-shenpi">
+                      <table class="process-list-th-tbody">
+                          <tr class="process-list-th-tr">
+                            <td class="process-list-th-title">  <span class="process-list-span">节点     </span> </td>
+                            <td class="process-list-th-name">   <span class="process-list-span">操作人   </span> </td>
+                            <td class="process-list-th-date">   <span class="process-list-span">操作时间 </span> </td>
+                            <td class="process-list-th-cz">     <span class="process-list-span">处理意见  </span> </td>
+                          </tr>
+                          <tr class="process-list-th-tr" *ngFor="let process of progressNodes;let i = index"
+                                    (click)="showProcessDetail(process)">
+                            <td> <span class="process-list-span"> {{process.name}}         </span> </td>
+                            <td> <span class="process-list-span"> {{process.operator}}     </span> </td>
+                            <td> <span class="process-list-span"> {{process.operate_date}} </span> </td>
+                            <td> <span class="process-list-span text-shenglue" [title]="handlingOpinions(process)"> {{handlingOpinions(process)}}      </span> </td>
+                          </tr>
+                        </table>
+                    </div>
+                  </div>
                 </div>
                 <div *ngSwitchCase="'table'" class="form--build--box--input--box" style="overflow-y: auto;">
                     <table class="table table-bordered">
@@ -151,7 +158,7 @@ declare var JSONPath: any;
                                 <td *ngIf="!tableAttr.isNotShow">
                                     <input [disabled]="disableEdit" type="text" class="form-control form--build--box--input" InitTableValue [tableEntity]="tableEntity" [key]="tableAttr.jsonPath"
                                         [(ngModel)]="tableEntity[tableAttr.jsonPath]">
-                                        
+
                                 </td>
                             </ng-container>
                             <td>
@@ -165,13 +172,13 @@ declare var JSONPath: any;
                 </div>
                 <div *ngSwitchCase="'logo'" class="form--build--box--input--box">
                     <img style="height: 100%;
-                    width: 100%;" 
+                    width: 100%;"
                     onerror="this.src = './assets/images/icon-40.png'"
                      [src]="tile.options.logoSrc" alt="">
                 </div>
-                <div *ngSwitchCase="'upload'" class="form--build--box--input--box">                 
+                <div *ngSwitchCase="'upload'" class="form--build--box--input--box">
                 </div>
-                <div *ngSwitchCase="'other-component'" class="form--build--box--input--box">                    
+                <div *ngSwitchCase="'other-component'" class="form--build--box--input--box">
                     <form-other-component
                     [disableEdit]="disableEdit"
                     [scene]="scene"
@@ -187,7 +194,7 @@ declare var JSONPath: any;
                     [_dwClassManageServiceGetMetadataCategoryInfo]="_dwClassManageServiceGetMetadataCategoryInfo"
                     [_dwClassManageServiceGetMetaSysClassList]="_dwClassManageServiceGetMetaSysClassList"
                     [entity]="entity"
-                     [componentType]="tile.options.componentType"></form-other-component>                  
+                     [componentType]="tile.options.componentType"></form-other-component>
                 </div>
                 <div *ngSwitchDefault>请选择一个类型</div>
             </div>
@@ -196,7 +203,7 @@ declare var JSONPath: any;
   `,
     styleUrls: ['./recordinfo.component.scss']
 })
-export class RecordinfoComponent implements OnInit {    
+export class RecordinfoComponent implements OnInit {
     /**
      * 显示模版单元格实例的集合
      */
@@ -259,7 +266,7 @@ export class RecordinfoComponent implements OnInit {
 
     @Input() ApiUrl: any //接口枚举类型
     @Input() baseUrl: string //上传所需url跟地址
-    @Input() AuthenticationService: any //用户服务 
+    @Input() AuthenticationService: any //用户服务
     @Input() scene?: string
     constructor(
         public dialog: MatDialog
@@ -278,7 +285,7 @@ export class RecordinfoComponent implements OnInit {
         str = _.castArray(str)
         return str.indexOf(attr) >= 0
     }
-  
+
     async getTemplateModule() {
         try {
             this.serverFiles = this.serverFiles || []
@@ -298,8 +305,8 @@ export class RecordinfoComponent implements OnInit {
             }
             if (!this.entity[filePathName]) this.entity[filePathName] = []
             //先把服务器挂接附件功能去掉
-            this.serverFiles = []         
-            this.initProcess()            
+            this.serverFiles = []
+            this.initProcess()
         } catch (err) {
             console.error(err)
             return
@@ -308,7 +315,7 @@ export class RecordinfoComponent implements OnInit {
 
     /**
      * 将重复的block整合成一个block,值存进一个content中
-     * @param jsonData 
+     * @param jsonData
      */
     formatShowJson(jsonData) {
         if (jsonData.file) jsonData.file = _.castArray(jsonData.file)
@@ -381,11 +388,11 @@ export class RecordinfoComponent implements OnInit {
                     if(c.contentType == 'date' && jsonPath(this.jsonData, c.attrName)[0]){
                         let deviation = jsonPath(this.jsonData, c.attrName)[0].indexOf('CST') != -1 ? 14 : 0
                         let hour = moment(jsonPath(this.jsonData, c.attrName)[0]).hour()
-                        let date = moment(jsonPath(this.jsonData, c.attrName)[0]).hour(hour - deviation).format('YYYY/MM/DD HH:mm:ss')                                                
+                        let date = moment(jsonPath(this.jsonData, c.attrName)[0]).hour(hour - deviation).format('YYYY/MM/DD HH:mm:ss')
                         this.entity[c.attrName]= date
-                        return 
+                        return
                     }
-                    if (jsonPath(this.jsonData, c.attrName) !== false) {                                           
+                    if (jsonPath(this.jsonData, c.attrName) !== false) {
                         this.entity[c.attrName] = jsonPath(this.jsonData, c.attrName)[0]
                         return
                     }
@@ -464,7 +471,7 @@ export class RecordinfoComponent implements OnInit {
         this.formatTableEntity(jsonData.record)
         // 重新转换回正确的服务端需要格式
         this.formatArrayItems(jsonData.record)
-        this.deleteEmptyFile(jsonData.record)        
+        this.deleteEmptyFile(jsonData.record)
         this.validPass = this.checkFormValidator()
         if (!this.validPass) {
             return false
@@ -477,16 +484,16 @@ export class RecordinfoComponent implements OnInit {
         var validPass = true
         this.tiles.forEach((tile: Tile) => {
             if (tile.options.contentType == 'label'){
-                return 
+                return
             }
             tile.options.scene = tile.options.scene || ''
             if (!tile.options.scene) {
                 if (tile.options.isRequired == 'true' && !this.entity[tile.options.attrName]) {
                     validPass = false
-                } else if (tile.options.isRequired == 'true' && tile.options.valueType == 'int' && Number.isNaN(Number(this.entity[tile.options.attrName]))) { // 123，"123"可通过，"abc"不行                                 
+                } else if (tile.options.isRequired == 'true' && tile.options.valueType == 'int' && Number.isNaN(Number(this.entity[tile.options.attrName]))) { // 123，"123"可通过，"abc"不行
                     validPass = false
-                }else if (tile.options.isRequired == 'true' && tile.options.contentType == 'input-number' && !(/^([0-9]{1,3}|999)$/.test(this.entity[tile.options.attrName]))){                    
-                    validPass = false 
+                }else if (tile.options.isRequired == 'true' && tile.options.contentType == 'input-number' && !(/^([0-9]{1,3}|999)$/.test(this.entity[tile.options.attrName]))){
+                    validPass = false
                 }
                 return
             }
@@ -496,7 +503,7 @@ export class RecordinfoComponent implements OnInit {
                 } else if (tile.options.isRequired == 'true' && tile.options.valueType == 'int' && Number.isNaN(Number(this.entity[tile.options.attrName]))) {
                     validPass = false
                 }else if (tile.options.isRequired == 'true' && tile.options.contentType == 'input-number' && !(/^([0-9]{1,3}|999)$/.test(this.entity[tile.options.attrName]))){
-                    validPass = false 
+                    validPass = false
                 }
             } else {
                 return
@@ -611,8 +618,8 @@ export class RecordinfoComponent implements OnInit {
         for (let key in this.saveEntity) {
             let path = key.replace('.file', '')
             let result = JSONPath.JSONPath({ path: path, json: jsonData, resultType: 'all' })
-            if (result[0]) {     
-                //没有找到匹配值         
+            if (result[0]) {
+                //没有找到匹配值
                 if (!this.saveEntity[key]) {
                     result[0].parent[result[0].parentProperty] = this.saveEntity[key]
                     continue
@@ -622,31 +629,31 @@ export class RecordinfoComponent implements OnInit {
                     continue
                 }
                 //当是文件控件时
-                if (isArray(this.saveEntity[key]) && this.saveEntity[key].length > 0 && this.saveEntity[key][0].url) {                
+                if (isArray(this.saveEntity[key]) && this.saveEntity[key].length > 0 && this.saveEntity[key][0].url) {
                     continue
-                } 
-                
+                }
+
                 //判断是否是时间控件
                 let row = this.tiles.find((c:Tile)=>c.options.contentType == 'date' && c.options.attrName == key)
                 if (row){
-                    //时间格式化                    
+                    //时间格式化
                     result[0].parent[result[0].parentProperty] = this.saveEntity[key] ? moment(this.saveEntity[key]).format("YYYY-MM-DD HH:mm:ss") : ''
                     continue
-                }               
+                }
                 result[0].parent[result[0].parentProperty] = this.saveEntity[key]
             } else {
-                
+
                 let path = key.replace('.content', '')
                 let result = JSONPath.JSONPath({ path: path, json: jsonData, resultType: 'all' })
                 if (result[0]) {
-                    //判断是否是时间控件                    
+                    //判断是否是时间控件
                     let row = this.tiles.find((c:Tile)=>c.options.contentType == 'date' && c.options.attrName == key)
                     if (row){
                         //时间格式化
                         result[0].value.content = this.saveEntity[key] ? moment(this.saveEntity[key]).format("YYYY-MM-DD HH:mm:ss") : ''
                     }else{
                         result[0].value.content = this.saveEntity[key]
-                    }                    
+                    }
                 }
             }
         }
@@ -685,12 +692,12 @@ export class RecordinfoComponent implements OnInit {
             this.entity[tile.options.attrName].splice(this.entity[tile.options.attrName].indexOf(attr), 1)
         }
         this.entity[tile.options.attrName] = this.entity[tile.options.attrName].join(',')
-    }   
+    }
 
     async previewDoc(url) {
         let preview_window = window.open('')
         let objectId = this.objectPath + url
-        objectId = objectId.replace(/\\/g, '/')        
+        objectId = objectId.replace(/\\/g, '/')
         preview_window.location.href = `${this.environmentBaseUrl}previewDoc?objectId=${objectId}&recordId=${this.id}&objectPath=${this.objectPath}&scene=${this.scene}`
     }
 
@@ -776,7 +783,7 @@ export class RecordinfoComponent implements OnInit {
         if (!this.baseUrl) console.warn(ErrorMessage.baseUrl)
         if (!this.AuthenticationService) console.warn(ErrorMessage.AuthenticationService)
         if (!this.objectPath) console.warn(ErrorMessage.ObjectPath)
-    }    
+    }
 
     ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
         if (!this.showTemplateXml) {

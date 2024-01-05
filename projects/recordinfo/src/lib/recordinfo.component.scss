@@ -422,3 +422,65 @@
     }
   }
 }
+
+.process-list-th-tbody{
+  width: 96%;
+  margin: 20px 20px 20px 15px;
+  margin-top: auto;
+  position: absolute;
+  // top: 50px;
+}
+.process-list-th-tr{
+  height: 23px;
+}
+.process-list-th-title{
+  background-color: #d3d3d3;
+  width: 20%;
+}
+.process-list-span{
+  text-align: left;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+}
+.process-list-th-name{
+  background-color: #d3d3d3;
+  width: 20%;
+}
+.process-list-th-date{
+  background-color: #d3d3d3;
+  width: 40%;
+}
+.process-list-th-cz{
+  background-color: #d3d3d3;
+  width: 20%;
+}
+.process-list-shenpi{
+  height: 70%;
+  overflow-y: auto;
+  width: 100%;
+  // margin-top: auto;
+  position: relative;
+}
+.div-title {
+  width: 100%;
+  margin-left: 15px;
+  // position: absolute;
+  left: 0px;
+  top: 15px;
+}
+.div-body{
+  height: 100%;
+  width:100%
+}
+.text-shenglue {
+  display: block;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -icab-text-overflow: ellipsis;
+  -khtml-text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+}
